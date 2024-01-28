@@ -4,26 +4,18 @@ const studentController = require("../controllers/student_controller");
 
 router.get("/", studentController.getStudent);
 
+router.get("/:id", studentController.getStudent);
+
 router.post("/", studentController.postStudent);
 
-router.put("/", studentController.putStudent);
+// router.post("/:id", studentController.postStudent);
 
-router.delete("/", studentController.deleteStudent);
+// router.put("/", studentController.putStudent);
+
+router.put("/:id", studentController.putStudent);
+
+// router.delete("/", studentController.deleteStudent);
+
+router.delete("/:id", studentController.deleteStudent);
 
 module.exports = router;
-
-// router.get("/student", (req, res) => {
-//     res.send("Student get");
-// });
-
-// router.post("/student", (req, res) => {
-//     res.send("Student post");
-// });
-
-// router.put("/student", (req, res) => {
-//     res.send("Student put");
-// });
-
-// router.delete("/student", (req, res) => {
-//     res.send("Student delete");
-// });

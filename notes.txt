@@ -1,0 +1,26 @@
+app.get("/", (req, res) => {
+    res.send("Hello World!")
+});
+
+app.get("/home", (req, res) => {
+    res.send("Hello World 123!")
+});
+
+router.get("/student", (req, res) => {
+    res.send("Student get");
+});
+
+router.post("/student", (req, res) => {
+    res.send("Student post");
+});
+
+router.put("/student", (req, res) => {
+    res.send("Student put");
+});
+
+router.delete("/student", (req, res) => {
+    res.send("Student delete");
+});
+
+run server command: node app.js
+install under devDependencies: npm i --save-dev package-name
