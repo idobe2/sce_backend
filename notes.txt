@@ -24,3 +24,13 @@ router.delete("/student", (req, res) => {
 
 run server command: node app.js
 install under devDependencies: npm i --save-dev package-name
+
+beforeAll((done) => {
+     appInit ((app_) => {
+         app = app_;
+         console.log("beforeAll");
+          Student.deleteMany().then(() => {
+             done()
+         });
+     });
+ });

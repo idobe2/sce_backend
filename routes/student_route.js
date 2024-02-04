@@ -16,6 +16,10 @@ router.put("/:id", studentController.putStudent);
 
 // router.delete("/", studentController.deleteStudent);
 
-router.delete("/:id", studentController.deleteStudent);
+// router.delete("/:id", studentController.deleteStudent);
+
+router.delete("/:id", (req, res) => {
+    res.status(400).send("faild student delete");
+});
 
 module.exports = router;

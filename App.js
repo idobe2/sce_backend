@@ -8,18 +8,21 @@ const mongoose = require("mongoose");
 const studentRoute = require("./routes/student_route");
 const postRoute = require("./routes/post_route");
 const bodyParser = require("body-parser");
+const { promises } = require("supertest/lib/test");
 
-mongoose.connect(process.env.DATABASE_URL);
-const db = mongoose.connection;
-db.on("error", (err) => console.log(err));
-db.once("open", () => console.log("Connected to Database"));
+const initApp = () => {
+    const promise = new Promise(async (resolve) => {
+        const db = mongoose.connection;
+        db.on("error", (err) => console.log(err));
+        db.once("open", () => console.log("Connected to Database"));
+        await mongoose.connect(process.env.DATABASE_URL);
+        app.use(bodyParser.json());
+        app.use(bodyParser.urlencoded({ extended: true }));
+        app.use("/student", studentRoute);
+        app.use("/post", postRoute);
+        resolve(app);
+        });
+        return promise;
+};
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-app.use("/student", studentRoute);
-app.use("/post", postRoute);
-
-app.listen(process.env.PORT, () => {
-    console.log(`Example app listening on port http://localhost:${process.env.PORT}!`)
-});
+module.exports = initApp;

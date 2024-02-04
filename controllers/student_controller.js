@@ -20,6 +20,11 @@ const getStudentbyId = async (req, res) => {
     console.log(req.params);
     try {
         const student = await Student.findById(req.params.id);
+        if (!student) {
+            return res.status(404).send("Student not found");
+        } else {
+            return res.status(200).send(student);
+            }
         res.status(200).send(student);
     } catch (error) {
         console.log(error);
@@ -55,8 +60,15 @@ const putStudent = async (req, res) => {
     res.send("Student put");
 };
 
-const deleteStudent = (req, res) => {
-    res.send("Student delete");
+const deleteStudent = async (req, res) => {
+    console.log("Student delete");
+    try {
+        await Student.findByIdAndDelete(req.params.id);
+        return res.status(200).send();
+        } catch (err) {
+            console.log(err);
+            res.status(400).send(err.message);
+        }
 };
 
 module.exports = {getStudent, getStudentbyId, postStudent, putStudent, deleteStudent}
