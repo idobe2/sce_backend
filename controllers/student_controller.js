@@ -25,7 +25,6 @@ const getStudentbyId = async (req, res) => {
         } else {
             return res.status(200).send(student);
             }
-        res.status(200).send(student);
     } catch (error) {
         console.log(error);
         res.status(400).send(error.message);

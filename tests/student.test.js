@@ -30,7 +30,7 @@ const students =  [
 
 describe("Student", () => {
 
-    test("Get /student - empy collection", async () => {
+    test("Get /student - empty collection", async () => {
         console.log("Test Student get all");
         const res = await request(app).get("/student");
         expect(res.statusCode).toBe(200);
@@ -53,6 +53,12 @@ describe("Student", () => {
             expect(data[0]._id).toBe(students[0]._id);
             expect(data[0].age).toBe(students[0].age);
         });
+
+    test("GET /student/:id", async () => {
+        const res = await request(app).get("/student/" + students[0]._id);            expect(res.statusCode).toBe(200);
+        expect(res.body.name).toBe(students[0].name);
+        expect(res.body._id).toBe(students[0]._id);            expect(res.body.age).toBe(students[0].age);
+       });
 
     test("Fail GET /student/:id", async () => {
         const res = await request(app).get('/student/00000');
