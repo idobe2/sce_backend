@@ -1,10 +1,9 @@
 import { Request, Response } from "express";
 import mongoose from "mongoose";
-import { IStudent } from "../models/student_model";
 
-class BaseController {
-    ItemModel: mongoose.Model<IStudent>;
-    constructor(ItemModel: mongoose.Model<IStudent>) {
+class BaseController<ModelType> {
+    ItemModel: mongoose.Model<ModelType>;
+    constructor(ItemModel: mongoose.Model<ModelType>) {
         this.ItemModel = ItemModel;
     }
 
