@@ -5,20 +5,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const router = express_1.default.Router();
-router.get("/", (req, res) => {
-    res.send("post get");
-});
-router.get("/:id", (req, res) => {
-    res.send("post get by id");
-});
-router.post("/", (req, res) => {
-    res.send("post post" + req.body);
-});
-router.put("/:id", (req, res) => {
-    res.send("post put");
-});
-router.delete("/:id", (req, res) => {
-    res.send("post delete");
-});
+const post_controller_1 = __importDefault(require("../controllers/post_controller"));
+router.get("/", post_controller_1.default.get.bind(post_controller_1.default));
+router.get("/:id", post_controller_1.default.getById.bind(post_controller_1.default));
+router.post("/", post_controller_1.default.post.bind(post_controller_1.default));
+router.put("/:id", post_controller_1.default.put.bind(post_controller_1.default));
+router.delete("/:id", post_controller_1.default.remove.bind(post_controller_1.default));
 exports.default = router;
 //# sourceMappingURL=post_route.js.map
