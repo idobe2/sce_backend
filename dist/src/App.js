@@ -22,7 +22,7 @@ const initApp = () => {
             app.use(body_parser_1.default.urlencoded({ extended: true }));
             app.use("/student", student_route_1.default);
             app.use("/post", post_route_1.default);
-            app.use("/post", auth_route_1.default);
+            app.use("/auth", auth_route_1.default);
             resolve(app);
         });
     });

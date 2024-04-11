@@ -86,7 +86,8 @@ describe("Student", () => {
         expect(res.statusCode).toBe(404);
     }));
     test("DELETE /student/:id", () => __awaiter(void 0, void 0, void 0, function* () {
-        const res = yield (0, supertest_1.default)(app).delete("/student/" + students[0]._id);
+        const res = yield (0, supertest_1.default)(app).delete("/student/" + students[0]._id)
+            .set('Authorization', `Bearer ${testUser.accessToken}`);
         expect(res.statusCode).toBe(200);
         const res2 = yield (0, supertest_1.default)(app).get("/student/" + students[0]._id)
             .set('Authorization', `Bearer ${testUser.accessToken}`);
