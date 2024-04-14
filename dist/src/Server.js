@@ -18,7 +18,7 @@ const swagger_jsdoc_1 = __importDefault(require("swagger-jsdoc"));
                 },
                 servers: [
                     {
-                        url: `http://localhost:${process.env.PORT}`,
+                        url: `http://0.0.0.0:${process.env.PORT}`,
                     },
                 ],
             },
@@ -28,7 +28,7 @@ const swagger_jsdoc_1 = __importDefault(require("swagger-jsdoc"));
         app.use("/api-docs", swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(specs));
     }
     app.listen(process.env.PORT, () => {
-        console.log(`Example app listening on port http://localhost:${process.env.PORT}!`);
+        console.log(`Example app listening on port http://0.0.0.0:${process.env.PORT}!`);
     });
 });
 //# sourceMappingURL=Server.js.map
