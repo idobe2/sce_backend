@@ -1,14 +1,14 @@
 ###
 
-GET http://0.0.0.0:3000/student/
+GET http://localhost:3000/student/
 
 ###
 
-GET http://0.0.0.0:3000/student?name=John
+GET http://localhost:3000/student?name=John
 
 ###
 
-POST http://0.0.0.0:3000/student
+POST http://localhost:3000/student
 Content-Type: application/json
 
 {
@@ -19,8 +19,8 @@ Content-Type: application/json
 
 ###
 
-PUT http://0.0.0.0:3000/student
+PUT http://localhost:3000/student
 
 ###
 
-DELETE http://0.0.0.0:3000/student
+DELETE http://localhost:3000/student

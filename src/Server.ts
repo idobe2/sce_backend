@@ -15,7 +15,7 @@ appInit().then((app) => {
                 },
                 servers: [
                     {
-                        url: `http://0.0.0.0:${process.env.PORT}`,
+                        url: `http://localhost:${process.env.PORT}`,
                     },
                 ],
             },
@@ -26,6 +26,6 @@ appInit().then((app) => {
     }
         
     app.listen(process.env.PORT, () => {
-        console.log(`Example app listening on port http://0.0.0.0:${process.env.PORT}!`);
+        console.log(`Example app listening on port http://localhost:${process.env.PORT}!`);
         });
     });
