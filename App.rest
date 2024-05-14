@@ -24,3 +24,7 @@ PUT http://localhost:3000/student
 ###
 
 DELETE http://localhost:3000/student
+
+###
+
+GET http://localhost:3000/post/find/663f54272a5449fe53ded31c

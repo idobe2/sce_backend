@@ -38,6 +38,24 @@ async getById(req: Request, res: Response){
     }
 }
 
+async getByOwnerId(req: Request, res: Response) {
+    console.log("Getting items by owner ID");
+    const ownerId = req.params.owner;
+    console.log("Owner ID:", ownerId);  // Log the owner ID to check if it's correctly received
+    try {
+        const items = await this.ItemModel.find({ owner: ownerId });
+        console.log("Query result:", items);  // Log the database query results
+        if (!items.length) {
+            return res.status(404).send("No items found for the specified owner");
+        } else {
+            return res.status(200).send(items);
+        }
+    } catch (error) {
+        console.log("Error during database query:", error);
+        res.status(400).send(error.message);
+    }
+}
+
 async post(req: Request, res: Response) {
     console.log("student post");
     try {

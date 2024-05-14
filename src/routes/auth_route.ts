@@ -81,7 +81,7 @@ router.post("/register", authController.register);
  * @swagger
  * /auth/login:
  *   post:
- *       summary: login existing user by email and password
+ *       summary: login existing user by email and password (access token required)
  *       tags: [Auth]
  *       requestBody:
  *           required: true
@@ -118,7 +118,7 @@ router.get("/logout", authController.logout);
  * @swagger
  * /auth/refresh:
  *  get:
- *      summary: get new access token and refresh token using the refresh token
+ *      summary: get new access token and refresh token using the refresh token (refresh token required)
  *      tags: [Auth]
  *      description: need to provide the refresh token in the auth header
  *      security:
