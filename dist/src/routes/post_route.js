@@ -20,14 +20,10 @@ const auth_middleware_1 = __importDefault(require("../common/auth_middleware"));
 *       Post:
 *           type: object
 *           required:
-*               _ _id
 *               - title
 *               - message
 *               - owner
 *           properties:
-*               _id:
-*                   type: string
-*                   description: The user id
 *               title:
 *                   type: string
 *                   description: The post title
@@ -38,10 +34,9 @@ const auth_middleware_1 = __importDefault(require("../common/auth_middleware"));
 *                   type: string
 *                   description: The post owner ID
 *           example:
-*               _id: '663f54272a5449fe53ded321'
 *               title: 'Lorem ipsum dolor sit amet'
 *               message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla tellus.'
-*               owner: '663f541eeae7f9ec39f9b5fd'
+*               owner: '663f5db16cf2615acbf64ca0'
 */
 /**
 * @swagger
@@ -89,9 +84,40 @@ router.get("/", post_controller_1.default.get.bind(post_controller_1.default));
 router.get("/:id", post_controller_1.default.getById.bind(post_controller_1.default));
 /**
  * @swagger
+ * /post/find/{owner}:
+ *  get:
+ *    summary: Get all posts by user ID
+ *    tags: [Post]
+ *    security:
+ *      - bearerAuth: []
+ *    parameters:
+ *      - in: path
+ *        name: owner
+ *        required: true
+ *        schema:
+ *          type: string
+ *          example: 5f8d04034b5f2c305c47b7b8
+ *        description: Unique ID of the user to retrieve their posts
+ *    responses:
+ *      200:
+ *          description: A list of posts owned by the user
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                       type: array
+ *                       items:
+ *                           $ref: '#/components/schemas/Post'
+ *      404:
+ *          description: No posts found for the specified owner
+ *      500:
+ *          description: Server error
+ */
+router.get("/find/:owner", post_controller_1.default.getByOwnerId.bind(post_controller_1.default));
+/**
+ * @swagger
  * /post:
  *  post:
- *    summary: create a new post
+ *    summary: create a new post (access token required)
  *    tags: [Post]
  *    security:
  *      - bearerAuth: []

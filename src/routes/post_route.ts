@@ -114,7 +114,6 @@ router.get("/:id", postController.getById.bind(postController));
  */
 router.get("/find/:owner", postController.getByOwnerId.bind(postController));
 
-
 /**
  * @swagger
  * /post:
