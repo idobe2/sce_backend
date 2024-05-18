@@ -4,6 +4,7 @@ export interface IStudent {
   name: string;
   _id: string;
   age: number;
+  image?: string;
 }
 
 const studentSchema = new mongoose.Schema<IStudent>({
@@ -19,6 +20,10 @@ const studentSchema = new mongoose.Schema<IStudent>({
     type: Number,
     required: true,
   },
+  image: {
+    type: String,
+    required: false,
+  }
 });
 
 export default mongoose.model<IStudent>("Student", studentSchema);

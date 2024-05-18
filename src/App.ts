@@ -21,8 +21,12 @@ const initApp = () => {
             app.use("/student", studentRoute);
             app.use("/post", postRoute);
             app.use("/auth", authRouth);
-            app.use("/file", imageRoute);
-            app.use("/uploads", express.static("uploads"));
+            app.use('api/photo', require('./routes/api/photo'))
+
+            // app.use("/file", imageRoute);
+            // app.use("/uploads", express.static("uploads"));
+            // app.use(express.static(__dirname + "/public"));
+
             resolve(app);
         })
     });
