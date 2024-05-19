@@ -23,6 +23,10 @@ const initApp = () => {
             app.use("/student", student_route_1.default);
             app.use("/post", post_route_1.default);
             app.use("/auth", auth_route_1.default);
+            app.use('api/photo', require('./routes/api/photo'));
+            // app.use("/file", imageRoute);
+            // app.use("/uploads", express.static("uploads"));
+            // app.use(express.static(__dirname + "/public"));
             resolve(app);
         });
     });

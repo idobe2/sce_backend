@@ -7,7 +7,9 @@ import studentRoute from "./routes/student_route";
 import postRoute from "./routes/post_route";
 import bodyParser from "body-parser";
 import authRouth from "./routes/auth_route";
-import imageRoute from "./routes/image_route";
+// import photoRoute from "./routes/photo_route";
+// import imageRoute from "./routes/image_route";
+import fileRoute from "./routes/file_route";
 
 
 const initApp = () => {
@@ -21,11 +23,11 @@ const initApp = () => {
             app.use("/student", studentRoute);
             app.use("/post", postRoute);
             app.use("/auth", authRouth);
-            app.use('api/photo', require('./routes/api/photo'))
-
+            // app.use('/photo', photoRoute);
             // app.use("/file", imageRoute);
-            // app.use("/uploads", express.static("uploads"));
-            // app.use(express.static(__dirname + "/public"));
+            app.use("/UploadPhoto", fileRoute);
+            app.use(bodyParser.urlencoded({ extended: false }));
+            app.use('/uploads', express.static('uploads'));
 
             resolve(app);
         })

@@ -17,6 +17,10 @@ const studentSchema = new mongoose_1.default.Schema({
         type: Number,
         required: true,
     },
+    image: {
+        type: String,
+        required: false,
+    }
 });
 exports.default = mongoose_1.default.model("Student", studentSchema);
 //# sourceMappingURL=student_model.js.map
