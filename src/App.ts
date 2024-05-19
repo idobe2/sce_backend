@@ -7,10 +7,7 @@ import studentRoute from "./routes/student_route";
 import postRoute from "./routes/post_route";
 import bodyParser from "body-parser";
 import authRouth from "./routes/auth_route";
-// import photoRoute from "./routes/photo_route";
-// import imageRoute from "./routes/image_route";
-import fileRoute from "./routes/file_route";
-
+import imageRoute from "./routes/image_route";
 
 const initApp = () => {
     const promise = new Promise<Express>((resolve) => {
@@ -19,16 +16,12 @@ const initApp = () => {
         db.once("open", () => console.log("Connected to Database"));
         mongoose.connect(process.env.DATABASE_URL).then(() => {
             app.use(bodyParser.json());
-            app.use(bodyParser.urlencoded({ extended: true }));
+            app.use(bodyParser.urlencoded({ extended: true, limit: '1mb' } ));
             app.use("/student", studentRoute);
             app.use("/post", postRoute);
             app.use("/auth", authRouth);
-            // app.use('/photo', photoRoute);
-            // app.use("/file", imageRoute);
-            app.use("/UploadPhoto", fileRoute);
-            app.use(bodyParser.urlencoded({ extended: false }));
+            app.use("/file", imageRoute);
             app.use('/uploads', express.static('uploads'));
-
             resolve(app);
         })
     });

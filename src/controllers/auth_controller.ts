@@ -83,6 +83,8 @@ const login = async (req: Request, res: Response) => {
 
     const { accessToken, refreshToken } = generateTokens(user._id.toString());
 
+    console.log("User id:", user._id.toString());
+
     if (user.tokens == null) {
       user.tokens = [refreshToken];
     } else {

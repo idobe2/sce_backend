@@ -18,22 +18,32 @@ import authMiddleware from "../common/auth_middleware";
 *           type: object
 *           required:
 *               - title
+*               - category
 *               - message
+*               - image
 *               - owner
 *           properties:
 *               title:
 *                   type: string
 *                   description: The post title
+*               category:
+*                   type: string
+*                   description: The post category
 *               message:
 *                   type: string
 *                   description: The post caption
+*               image:
+*                   type: string
+*                   description: The post image URL
 *               owner:
 *                   type: string
 *                   description: The post owner ID
 *           example:
 *               title: 'Lorem ipsum dolor sit amet'
+*               category: 'Lorem ipsum'
 *               message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla tellus.'
 *               owner: '663f5db16cf2615acbf64ca0'
+*               image: 'http://localhost:3000/uploads/12345.jpg'
 */
 
 /**

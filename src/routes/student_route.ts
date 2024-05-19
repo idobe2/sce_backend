@@ -34,6 +34,8 @@ import authMiddleware from "../common/auth_middleware";
 *               _id: '12345'
 *               name: 'jhon'
 *               age: 25
+*               image: 'http://localhost:3000/uploads/12345.jpg'
+* 
 */
 
 /**
@@ -82,7 +84,7 @@ router.post("/", authMiddleware, studentController.post.bind(studentController))
 
 /**
  * @swagger
- * /student/{id}:
+ * /student/get/{id}:
  *  get:
  *    summary: get student by id
  *    tags: [Student]
@@ -104,7 +106,27 @@ router.post("/", authMiddleware, studentController.post.bind(studentController))
  *                  schema:
  *                      $ref: '#/components/schemas/Student'
  * */
-router.get("/:id", authMiddleware, studentController.getById.bind(studentController));
+router.get("/get/:id", studentController.getById.bind(studentController));
+
+/**
+ * @swagger
+ * /student/{accessToken}:
+ *  get:
+ *    summary: get student (access token required)
+ *    tags: [Student]
+ *    security:
+ *      - bearerAuth: []
+ *        schema:
+ *          type: string
+ *    responses:
+ *      200:
+ *          description: Student details
+ *          content:
+ *              application/json:  
+ *                  schema:
+ *                      $ref: '#/components/schemas/Student'
+ * */
+router.get("/:accessToken", authMiddleware, studentController.getByAccessToken.bind(studentController));
 
 router.put("/:id", authMiddleware, studentController.put.bind(studentController));
 

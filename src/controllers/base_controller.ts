@@ -38,6 +38,21 @@ async getById(req: Request, res: Response){
     }
 }
 
+async getByAccessToken(req: Request, res: Response){
+    const user = req.body.user;
+    try {
+        const item = await this.ItemModel.findById(user);
+        if (!item) {
+            return res.status(404).send("Student not found");
+        } else {
+            return res.status(200).send(item);
+            }
+    } catch (error) {
+        console.log(error);
+        res.status(400).send(error.message);
+    }
+}
+
 async getByOwnerId(req: Request, res: Response) {
     console.log("Getting items by owner ID");
     const ownerId = req.params.owner;
