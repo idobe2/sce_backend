@@ -2,11 +2,12 @@ import mongoose from "mongoose";
 
 export interface IPost {
   title: string;
+  category: string;
+  price: number;
   message: string;
   owner: string;
   image: string;
-  price: number;
-  category: string;
+  date: Date;
 }
 
 const postSchema = new mongoose.Schema({
@@ -33,6 +34,10 @@ const postSchema = new mongoose.Schema({
   owner: {
     type: String,
     required: true,
+  },
+  date: {
+    type: Date,
+    default: Date.now,
   },
 });
 

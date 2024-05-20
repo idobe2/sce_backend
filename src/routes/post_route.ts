@@ -19,6 +19,7 @@ import authMiddleware from "../common/auth_middleware";
 *           required:
 *               - title
 *               - category
+*               - price
 *               - message
 *               - image
 *               - owner
@@ -29,6 +30,9 @@ import authMiddleware from "../common/auth_middleware";
 *               category:
 *                   type: string
 *                   description: The post category
+*               price:
+*                   type: number
+*                   description: The item price
 *               message:
 *                   type: string
 *                   description: The post caption
@@ -41,6 +45,7 @@ import authMiddleware from "../common/auth_middleware";
 *           example:
 *               title: 'Lorem ipsum dolor sit amet'
 *               category: 'Lorem ipsum'
+*               price: '500'
 *               message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla tellus.'
 *               owner: '663f5db16cf2615acbf64ca0'
 *               image: 'http://localhost:3000/uploads/12345.jpg'

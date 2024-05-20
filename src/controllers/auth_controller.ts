@@ -1,7 +1,11 @@
 import { Request, Response } from "express";
 import User from "../models/user_model";
+import Student from "../models/student_model";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { OAuth2Client } from "google-auth-library";
+
+const client = new OAuth2Client();
 
 const register = async (req: Request, res: Response) => {
   console.log(req.body);
@@ -150,9 +154,62 @@ const refresh = async (req: Request, res: Response) => {
   });
 }
 
+const googleSignIn = async (req: Request, res: Response) => {
+  console.log(req.body);
+  try{
+      const ticket = await client.verifyIdToken({
+      idToken: req.body.credentialResponse,
+      audience: req.body.audience
+  });
+  const payload = ticket.getPayload();
+  const email = payload?.email;
+  if(email != null){
+      let user = await User.findOne({'email': email});
+          if(user == null){
+              user = await User.create({
+                  email: email,
+              });
+              console.log("User:", user);
+          }
+          const { accessToken, refreshToken } = generateTokens(user._id.toString());
+          if (user.tokens == null){
+              user.tokens = [refreshToken];
+          }else {
+              user.tokens.push(refreshToken);
+          }
+          console.log("User:", user);
+          await user.save();
+          let student = await Student.findOne({'_id': user._id});
+          if (student == null) {
+            student = await Student.create({
+              _id: user._id,
+              name: payload?.name,
+              age: 0,
+              image: payload?.picture
+            });
+          }
+        console.log("Student:", student);
+
+          await student.save();
+          return res.status(200).send({
+              accessToken: accessToken,
+              refreshToken: refreshToken,
+              email: email,
+              _id: user._id,
+              image: student.image,
+              message: "Login successful",
+          });
+      }
+  }catch (error){
+      return res.status(400).send(error.message);
+    }
+}
+  
+
 export default {
   register,
   login,
   logout,
   refresh,
+  googleSignIn
 };

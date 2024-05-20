@@ -12,6 +12,7 @@ const student_route_1 = __importDefault(require("./routes/student_route"));
 const post_route_1 = __importDefault(require("./routes/post_route"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const auth_route_1 = __importDefault(require("./routes/auth_route"));
+const image_route_1 = __importDefault(require("./routes/image_route"));
 const initApp = () => {
     const promise = new Promise((resolve) => {
         const db = mongoose_1.default.connection;
@@ -19,14 +20,12 @@ const initApp = () => {
         db.once("open", () => console.log("Connected to Database"));
         mongoose_1.default.connect(process.env.DATABASE_URL).then(() => {
             app.use(body_parser_1.default.json());
-            app.use(body_parser_1.default.urlencoded({ extended: true }));
+            app.use(body_parser_1.default.urlencoded({ extended: true, limit: '1mb' }));
             app.use("/student", student_route_1.default);
             app.use("/post", post_route_1.default);
             app.use("/auth", auth_route_1.default);
-            app.use('api/photo', require('./routes/api/photo'));
-            // app.use("/file", imageRoute);
-            // app.use("/uploads", express.static("uploads"));
-            // app.use(express.static(__dirname + "/public"));
+            app.use("/file", image_route_1.default);
+            app.use('/uploads', express_1.default.static('uploads'));
             resolve(app);
         });
     });

@@ -50,6 +50,24 @@ class BaseController {
             }
         });
     }
+    getByAccessToken(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const user = req.body.user;
+            try {
+                const item = yield this.ItemModel.findById(user);
+                if (!item) {
+                    return res.status(404).send("Student not found");
+                }
+                else {
+                    return res.status(200).send(item);
+                }
+            }
+            catch (error) {
+                console.log(error);
+                res.status(400).send(error.message);
+            }
+        });
+    }
     getByOwnerId(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             console.log("Getting items by owner ID");

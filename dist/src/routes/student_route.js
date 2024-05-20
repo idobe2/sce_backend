@@ -37,6 +37,8 @@ const auth_middleware_1 = __importDefault(require("../common/auth_middleware"));
 *               _id: '12345'
 *               name: 'jhon'
 *               age: 25
+*               image: 'http://localhost:3000/uploads/12345.jpg'
+*
 */
 /**
 * @swagger
@@ -82,7 +84,7 @@ router.get("/", auth_middleware_1.default, student_controller_1.default.get.bind
 router.post("/", auth_middleware_1.default, student_controller_1.default.post.bind(student_controller_1.default));
 /**
  * @swagger
- * /student/{id}:
+ * /student/get/{id}:
  *  get:
  *    summary: get student by id
  *    tags: [Student]
@@ -104,7 +106,26 @@ router.post("/", auth_middleware_1.default, student_controller_1.default.post.bi
  *                  schema:
  *                      $ref: '#/components/schemas/Student'
  * */
-router.get("/:id", auth_middleware_1.default, student_controller_1.default.getById.bind(student_controller_1.default));
+router.get("/get/:id", student_controller_1.default.getById.bind(student_controller_1.default));
+/**
+ * @swagger
+ * /student/{accessToken}:
+ *  get:
+ *    summary: get student (access token required)
+ *    tags: [Student]
+ *    security:
+ *      - bearerAuth: []
+ *        schema:
+ *          type: string
+ *    responses:
+ *      200:
+ *          description: Student details
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/Student'
+ * */
+router.get("/:accessToken", auth_middleware_1.default, student_controller_1.default.getByAccessToken.bind(student_controller_1.default));
 router.put("/:id", auth_middleware_1.default, student_controller_1.default.put.bind(student_controller_1.default));
 router.delete("/:id", auth_middleware_1.default, student_controller_1.default.remove.bind(student_controller_1.default));
 exports.default = router;

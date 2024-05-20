@@ -13,8 +13,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const user_model_1 = __importDefault(require("../models/user_model"));
+const student_model_1 = __importDefault(require("../models/student_model"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const google_auth_library_1 = require("google-auth-library");
+const client = new google_auth_library_1.OAuth2Client();
 const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log(req.body);
     const email = req.body.email;
@@ -72,6 +75,7 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             return res.status(400).send("invalid email or password");
         }
         const { accessToken, refreshToken } = generateTokens(user._id.toString());
+        console.log("User id:", user._id.toString());
         if (user.tokens == null) {
             user.tokens = [refreshToken];
         }
@@ -131,10 +135,58 @@ const refresh = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         }
     }));
 });
+const googleSignIn = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log(req.body);
+    try {
+        const ticket = yield client.verifyIdToken({
+            idToken: req.body.credentialResponse,
+            audience: req.body.audience
+        });
+        const payload = ticket.getPayload();
+        const email = payload === null || payload === void 0 ? void 0 : payload.email;
+        if (email != null) {
+            let user = yield user_model_1.default.findOne({ 'email': email });
+            if (user == null) {
+                user = yield user_model_1.default.create({
+                    email: email,
+                    //imgUrl: payload?.picture,
+                    // name: payload?.name
+                });
+            }
+            const { accessToken, refreshToken } = generateTokens(user._id.toString());
+            if (user.tokens == null) {
+                user.tokens = [refreshToken];
+            }
+            else {
+                user.tokens.push(refreshToken);
+            }
+            yield user.save();
+            const student = yield student_model_1.default.create({
+                user: user._id,
+                name: payload === null || payload === void 0 ? void 0 : payload.name,
+                age: 0,
+                image: payload === null || payload === void 0 ? void 0 : payload.picture
+            });
+            yield student.save();
+            return res.status(200).send({
+                accessToken: accessToken,
+                refreshToken: refreshToken,
+                email: email,
+                _id: user._id,
+                image: student.image,
+                message: "Login successful",
+            });
+        }
+    }
+    catch (error) {
+        return res.status(400).send(error.message);
+    }
+});
 exports.default = {
     register,
     login,
     logout,
     refresh,
+    googleSignIn
 };
 //# sourceMappingURL=auth_controller.js.map
