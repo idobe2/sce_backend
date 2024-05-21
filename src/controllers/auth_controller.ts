@@ -111,6 +111,7 @@ const logout = (req: Request, res: Response) => {
 
 const refresh = async (req: Request, res: Response) => {
   //extract token from http header
+  console.log("Refresh")
   const authHeader = req.headers['authorization'];
   const refreshTokenOrig = authHeader && authHeader.split(' ')[1];
 

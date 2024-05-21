@@ -155,6 +155,32 @@ router.post("/", authMiddleware, postController.post.bind(postController));
 
 router.put("/:id", postController.put.bind(postController));
 
-router.delete("/:id", postController.remove.bind(postController));
+/**
+ * @swagger
+ * /post/delete/{id}:
+ *  delete:
+ *    summary: delete post by post ID
+ *    tags: [Post]
+ *    security:
+ *      - bearerAuth: []
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        required: true
+ *        schema:
+ *          type: string
+ *          example: 5f8d04034b5f2c305c47b7b8
+ *        description: Unique ID of the post to delete
+ *    responses:
+ *      200:
+ *          description: The post has been deleted successfully
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                       type: array
+ *                       items:
+ *                           $ref: '#/components/schemas/Post'
+ */
+router.delete("/delete/:id", postController.remove.bind(postController));
 
 export default router;
