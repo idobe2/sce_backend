@@ -153,6 +153,32 @@ router.get("/find/:owner", postController.getByOwnerId.bind(postController));
  * */
 router.post("/", authMiddleware, postController.post.bind(postController));
 
+/**
+ * @swagger
+ * /post/{id}:
+ *  put:
+ *    summary: Update post by post ID
+ *    tags: [Post]
+ *    security:
+ *      - bearerAuth: []
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        required: true
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            $ref: '#/components/schemas/Post'
+ *    responses:
+ *      200:
+ *          description: Post updated successfully
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/Post'
+ * */
 router.put("/:id", postController.put.bind(postController));
 
 /**

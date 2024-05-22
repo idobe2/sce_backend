@@ -128,7 +128,33 @@ router.get("/get/:id", studentController.getById.bind(studentController));
  * */
 router.get("/:accessToken", authMiddleware, studentController.getByAccessToken.bind(studentController));
 
-router.put("/:id", authMiddleware, studentController.put.bind(studentController));
+/**
+ * @swagger
+ * /student/{id}:
+ *  put:
+ *    summary: Update student (access token required)
+ *    tags: [Student]
+ *    security:
+ *      - bearerAuth: []
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        required: true
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            $ref: '#/components/schemas/Student'
+ *    responses:
+ *      200:
+ *          description: Student updated successfully
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/Student'
+ * */
+router.put("/:id", authMiddleware, studentController.edit.bind(studentController));
 
 router.delete("/:id", authMiddleware, studentController.remove.bind(studentController));
 
