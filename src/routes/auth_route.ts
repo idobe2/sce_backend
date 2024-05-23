@@ -1,5 +1,6 @@
 import express from "express";
 import authController from "../controllers/auth_controller";
+import authMiddleware from "../common/auth_middleware";
 const router = express.Router();
 
 /**
@@ -134,5 +135,33 @@ router.get("/logout", authController.logout);
 router.get("/refresh", authController.refresh);
 
 router.post("/google", authController.googleSignIn);
+
+/**
+ * @swagger
+ * /auth/delete/{id}:
+ *  delete:
+ *    summary: delete user by user ID (access token required)
+ *    tags: [Auth]
+ *    security:
+ *      - bearerAuth: []
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        required: true
+ *        schema:
+ *          type: string
+ *          example: 5f8d04034b5f2c305c47b7b8
+ *        description: Unique ID of the user to delete
+ *    responses:
+ *      200:
+ *          description: The user has been deleted successfully
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                       type: array
+ *                       items:
+ *                           $ref: '#/components/schemas/User'
+ */
+router.delete("/delete/:id", authMiddleware, authController.deleteUser);
 
 export default router;

@@ -156,6 +156,32 @@ router.get("/:accessToken", authMiddleware, studentController.getByAccessToken.b
  * */
 router.put("/:id", authMiddleware, studentController.edit.bind(studentController));
 
-router.delete("/:id", authMiddleware, studentController.remove.bind(studentController));
+/**
+ * @swagger
+ * /student/delete/{id}:
+ *  delete:
+ *    summary: delete sudent by student ID (access token required)
+ *    tags: [Student]
+ *    security:
+ *      - bearerAuth: []
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        required: true
+ *        schema:
+ *          type: string
+ *          example: 5f8d04034b5f2c305c47b7b8
+ *        description: Unique ID of the student to delete
+ *    responses:
+ *      200:
+ *          description: The student has been deleted successfully
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                       type: array
+ *                       items:
+ *                           $ref: '#/components/schemas/Student'
+ */
+router.delete("/delete/:id", authMiddleware, studentController.remove.bind(studentController));
 
 export default router;

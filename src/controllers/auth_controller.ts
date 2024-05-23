@@ -206,10 +206,22 @@ const googleSignIn = async (req: Request, res: Response) => {
     }
 }
 
+const deleteUser = async (req: Request, res: Response) => {
+        console.log("Item delete");
+        try {
+            await User.findByIdAndDelete(req.params.id);
+            return res.status(200).send();
+        } catch (err) {
+            console.log(err);
+            res.status(400).send(err.message);
+        }
+}
+
 export default {
   register,
   login,
   logout,
   refresh,
-  googleSignIn
+  googleSignIn,
+  deleteUser
 };

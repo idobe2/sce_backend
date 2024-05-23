@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import mongoose from "mongoose";
-import Student from "../models/student_model";
 
 class BaseController<ModelType> {
     ItemModel: mongoose.Model<ModelType>;

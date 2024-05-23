@@ -12,7 +12,7 @@ class StudentController extends baseController<IStudent> {
     async edit(req: Request, res: Response) {
         console.log("student: ", req.params);
         try {
-            let student = await Student.findOne({'id': req.params._id});
+            const student = await Student.findOne({'id': req.params._id});
             if (!student) {
                 return res.status(404).send("Student not found");
             }
