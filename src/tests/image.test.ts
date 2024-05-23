@@ -25,4 +25,24 @@ describe("Image Tests", () => {
             expect(response.statusCode).toEqual(200);
         }
     })
+
+    test ("Upload invalid file type", async () => {
+        const filePath = `${__dirname}/invalid.txt`;
+        const rs = fs.existsSync(filePath);
+        if (rs) {
+            const response = await request(appInit)
+            .post("/file/file?file=123.jpeg").attach('file', filePath);
+            expect(response.statusCode).toEqual(400);
+        }
+    })
+
+    test("Upload large image file", async () => {
+        const largeImagePath = `${__dirname}/large_image.jpg`;
+        const rs = fs.existsSync(largeImagePath);
+        if (rs) {
+            const response = await request(appInit)
+            .post("/file/file?file=123.jpeg").attach('file', largeImagePath);
+            expect(response.statusCode).toEqual(413);
+        }
+      });
 });

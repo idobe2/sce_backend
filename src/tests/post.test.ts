@@ -40,8 +40,10 @@ describe("Post", () => {
 
   const post = {
     title: "this is post title",
+    category: "books",
+    price: 100,
     message: "this is my post message ..... ",
-    owner: "Moshe",
+    owner: "12345",
   };
 
   test("Post /post - empty collection", async () => {
@@ -50,5 +52,34 @@ describe("Post", () => {
       .set("Authorization", "Bearer " + testUser.accessToken)
       .send(post);
     expect(res.statusCode).toBe(201);
+  });
+
+  test("Update /post", async () => {
+    const postRes = await request(app).post("/post")
+    .set("Authorization", "Bearer " + testUser.accessToken)
+    .send(post);
+    const postId = postRes.body._id;
+    const updatedPost = { ...post, title: "Updated title" };
+    const res = await request(app)
+    .put(`/post/${postId}`)
+    .set("Authorization", "Bearer " + testUser.accessToken)
+    .send(updatedPost);
+    expect(res.statusCode).toBe(200);
+  });
+
+  test("Delete /post", async () => {
+    const postRes = await request(app)
+    .post("/post")
+    .set("Authorization", "Bearer " + testUser.accessToken)
+    .send(post);
+    const postId = postRes.body._id;
+    const res = await request(app)
+    .delete(`/post/delete/${postId}`)
+    .set("Authorization", "Bearer " + testUser.accessToken);
+    expect(res.statusCode).toBe(200);
+    const getRes = await request(app)
+    .get(`/post/delete/${postId}`)
+    .set("Authorization", "Bearer " + testUser.accessToken);
+    expect(getRes.statusCode).toBe(404);
   });
 });

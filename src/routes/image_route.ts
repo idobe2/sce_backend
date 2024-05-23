@@ -20,6 +20,9 @@ router.post("/upload", upload.single("file"), (req, res) => {
   if (!req.file) {
     return res.status(400).json({ message: "No file uploaded" });
   }
+  else if (req.file.size > 1024 * 1024) {
+    return res.status(413).json({ message: "File too large" });
+  }
   console.log("check: " + base + req.file.filename);
   res
     .status(200)

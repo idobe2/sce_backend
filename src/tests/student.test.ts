@@ -70,7 +70,7 @@ describe("Student", () => {
         });
 
     test("GET /student/:id", async () => {
-        const res = await request(app).get("/student/" + students[0]._id)
+        const res = await request(app).get("/student/get/" + students[0]._id)
         .set('Authorization', `Bearer ${testUser.accessToken}`);
         expect(res.statusCode).toBe(200);
         expect(res.body.name).toBe(students[0].name);
@@ -78,18 +78,37 @@ describe("Student", () => {
         expect(res.body.age).toBe(students[0].age);
        });
 
-    test("Fail GET /student/:id", async () => {
-        const res = await request(app).get('/student/00000')
+    test("Fail GET /student/get/:id", async () => {
+        const res = await request(app).get('/student/get/00000')
         .set('Authorization', `Bearer ${testUser.accessToken}`);
         expect(res.statusCode).toBe(404);
     });
 
-    test("DELETE /student/:id", async () => {
-        const res = await request(app).delete("/student/" + students[0]._id)
+    test("Get /student without token", async () => {
+        const res = await request(app).get("/student/");
+        expect(res.statusCode).toBe(401);
+      });
+
+      test("PUT /student/:id", async () => {
+        const res = await request(app).post("/student")
+        .send(students[0])
+        .set('Authorization', `Bearer ${testUser.accessToken}`);
+        const studentId = res.body._id;
+        const updatedStudent = { ...students[0], age: 24 };
+        const res2 = await request(app)
+        .put(`/student/${studentId}`)
+        .set('Authorization', `Bearer ${testUser.accessToken}`)
+        .send(updatedStudent);
+        expect(res2.statusCode).toEqual(200);
+        expect(res2.body.age).toEqual(24);
+      });
+
+    test("DELETE /student/delete/:id", async () => {
+        const res = await request(app).delete("/student/delete/" + students[0]._id)
         .set('Authorization', `Bearer ${testUser.accessToken}`);
         expect(res.statusCode).toBe(200);
 
-        const res2 = await request(app).get("/student/" + students[0]._id)
+        const res2 = await request(app).get("/student/delete/" + students[0]._id)
         .set('Authorization', `Bearer ${testUser.accessToken}`);
         expect(res2.statusCode).toBe(404);
     });

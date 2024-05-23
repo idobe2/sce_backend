@@ -30,6 +30,16 @@ describe("Auth test", () => {
     expect(res.statusCode).toBe(200);
   });
 
+  test("Post /register with existing email", async () => {
+    const res = await request(app).post("/auth/register").send(user);
+    expect(res.statusCode).toBe(400);
+  });
+
+  test("Post /login with incorrect password", async () => {
+    const res = await request(app).post("/auth/login").send({ ...user, password: "wrongpassword" });
+    expect(res.statusCode).toBe(400);
+  });
+
   test("Post /login", async () => {
     const res = await request(app).post("/auth/login").send(user);
     expect(res.statusCode).toBe(200);
