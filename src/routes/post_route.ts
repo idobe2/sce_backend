@@ -131,6 +131,38 @@ router.get("/find/:owner", postController.getByOwnerId.bind(postController));
 
 /**
  * @swagger
+ * /post/get/{category}:
+ *  get:
+ *    summary: Get all posts by category
+ *    tags: [Post]
+ *    security:
+ *      - bearerAuth: []
+ *    parameters:
+ *      - in: path
+ *        name: category
+ *        required: true
+ *        schema:
+ *          type: string
+ *          example: books
+ *        description: Category of the posts to retrieve
+ *    responses:
+ *      200:
+ *          description: A list of posts in the specified category
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                       type: array
+ *                       items:
+ *                           $ref: '#/components/schemas/Post'
+ *      404:
+ *          description: No posts found for the specified category
+ *      500:
+ *          description: Server error
+ */
+router.get("/get/:category", postController.getByCategory.bind(postController));
+
+/**
+ * @swagger
  * /post:
  *  post:
  *    summary: create a new post (access token required)

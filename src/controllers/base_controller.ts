@@ -23,6 +23,24 @@ class BaseController<ModelType> {
         }
     }
 
+    async getByCategory(req: Request, res: Response) {
+        console.log("Getting items by category");
+        const category = req.params.category;
+        console.log("Category:", category);
+        try {
+            const items = await this.ItemModel.find({ category: category });
+            console.log("Query result:", items);
+            if (!items.length) {
+                return res.status(404).send("No items found");
+            } else {
+                return res.status(200).send(items);
+            }
+        } catch (error) {
+            console.log("Error during database query:", error);
+            res.status(400).send(error.message);
+        }
+    }
+
     async getById(req: Request, res: Response) {
         console.log(req.params);
         try {
