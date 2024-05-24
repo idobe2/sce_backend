@@ -14,7 +14,7 @@ class postController extends baseController<IPost> {
   async edit(req: Request, res: Response) {
     console.log("post: ", req.params);
     try {
-        let item = await Post.findById({'id': req.params._id});
+        const item = await Post.findById({'id': req.params._id});
         if (!item) {
             return res.status(404).send("Post not found");
         }
